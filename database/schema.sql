@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS rooms (
   room_number        VARCHAR(10) NOT NULL,
   name               VARCHAR(120) NOT NULL,
   room_type_id       INT UNSIGNED NOT NULL,
+    location           VARCHAR(80) NOT NULL DEFAULT 'Chennai',
   description        TEXT NULL,
   price_per_night    DECIMAL(10,2) NOT NULL,
   capacity           TINYINT UNSIGNED NOT NULL,

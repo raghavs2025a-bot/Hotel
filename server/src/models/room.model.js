@@ -53,6 +53,7 @@ export async function searchRooms(f) {
     where.push("r.operational_status = 'available'");
   }
   if (f.guests) { where.push('r.capacity >= ?'); whereParams.push(f.guests); }
+  if (f.location) { where.push('r.location = ?'); whereParams.push(f.location); }
   if (f.typeId) { where.push('r.room_type_id = ?'); whereParams.push(f.typeId); }
   if (f.minPrice !== null && f.minPrice !== undefined) { where.push('r.price_per_night >= ?'); whereParams.push(f.minPrice); }
   if (f.maxPrice !== null && f.maxPrice !== undefined) { where.push('r.price_per_night <= ?'); whereParams.push(f.maxPrice); }

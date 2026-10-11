@@ -9,7 +9,9 @@ import useDebounce from '../hooks/useDebounce.js';
 import { roomService } from '../services/index.js';
 import { formatINR, nightsBetween } from '../utils/format.js';
 
-const DEFAULT_FILTERS = { maxPrice: '', capacity: '', amenities: [], sort: 'recommended', onlyAvailable: false, text: '' };
+const DEFAULT_FILTERS = { maxPrice: '', capacity: '', amenities: [], sort: 'recommended', onlyAvailable: false, text: '', location: '' };
+
+const CITIES = ['Chennai', 'Mumbai', 'Bangalore', 'Delhi', 'Dubai', 'Bangkok', 'Singapore', 'Tokyo', 'Bali', 'Paris', 'New York', 'Sydney'];
 
 export default function Rooms() {
   const [sp, setSp] = useSearchParams();
@@ -29,6 +31,7 @@ export default function Rooms() {
     const guests = Math.max(Number(search.guests) || 0, Number(debounced.capacity) || 0);
     if (guests) p.guests = guests;
     if (search.category) p.category = search.category;
+    if (debounced.location) p.location = debounced.location;
     if (debounced.maxPrice && meta.data && Number(debounced.maxPrice) < meta.data.price.max_price) p.maxPrice = debounced.maxPrice;
     if (debounced.amenities.length) p.amenities = debounced.amenities.join(',');
     if (debounced.text.trim()) p.search = debounced.text.trim();
@@ -65,6 +68,16 @@ export default function Rooms() {
         <button type="button" className="btn btn-outline filter-toggle" onClick={() => setShowFilters((s) => !s)} aria-expanded={showFilters}><Filter size={18} /> Filters &amp; sorting</button>
         <aside className={`filters ${showFilters ? 'open' : ''}`} aria-label="Room filters">
           <div className="filters-head"><h2>Filters</h2><button type="button" className="link-btn" onClick={reset}><RotateCcw size={14} /> Reset</button></div>
+
+          <div className="field">
+            <label htmlFor="f-location">City</label>
+            <select id="f-location" value={filters.location} onChange={(e) => setFilter('location', e.target.value)}>
+              <option value="">All cities</option>
+              {CITIES.map((city) => (
+                <option key={city} value={city}>{city}</option>
+              ))}
+            </select>
+          </div>
 
           <div className="field">
             <label htmlFor="f-text">Search</label>
