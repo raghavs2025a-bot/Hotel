@@ -1,0 +1,21 @@
+{
+  "name": "hotel-reservation-system",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StayEase - Hotel Reservation and Management System (React + Express + MySQL)",
+  "scripts": {
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently -n server,client -c blue,green \"npm --prefix server run dev\" \"npm --prefix client run dev\"",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server run start",
+    "start:prod": "npm run build && npm run start",
+    "db:setup": "npm --prefix server run db:setup",
+    "db:reset": "npm --prefix server run db:reset"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": { "node": ">=18.17" }
+}
